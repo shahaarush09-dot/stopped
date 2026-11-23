@@ -1,0 +1,493 @@
+{
+  "base": "https://clinicaltrials.gov/api/v2",
+  "isFixture": false,
+  "fetchedAt": "2026-11-23T21:08:08.787Z",
+  "apiVersion": "2.0.5",
+  "dataTimestamp": "2026-11-23T10:00:05",
+  "terms": [
+    {
+      "cohort": "rare",
+      "group": "sarcoma",
+      "term": "sarcoma",
+      "n": 1841,
+      "pages": 2
+    },
+    {
+      "cohort": "rare",
+      "group": "sarcoma",
+      "term": "gastrointestinal stromal tumor",
+      "n": 286,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "sarcoma",
+      "term": "osteosarcoma",
+      "n": 425,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "sarcoma",
+      "term": "Ewing sarcoma",
+      "n": 245,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "sarcoma",
+      "term": "rhabdomyosarcoma",
+      "n": 258,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "mesothelioma",
+      "term": "mesothelioma",
+      "n": 387,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "biliary",
+      "term": "cholangiocarcinoma",
+      "n": 520,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "biliary",
+      "term": "biliary tract cancer",
+      "n": 533,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "biliary",
+      "term": "gallbladder cancer",
+      "n": 232,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "adrenal",
+      "term": "adrenocortical carcinoma",
+      "n": 59,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "adrenal",
+      "term": "pheochromocytoma",
+      "n": 82,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "adrenal",
+      "term": "paraganglioma",
+      "n": 89,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "neuroendocrine",
+      "term": "neuroendocrine tumor",
+      "n": 3007,
+      "pages": 4
+    },
+    {
+      "cohort": "rare",
+      "group": "neuroendocrine",
+      "term": "neuroendocrine carcinoma",
+      "n": 821,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "neuroendocrine",
+      "term": "carcinoid",
+      "n": 178,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "thymic",
+      "term": "thymoma",
+      "n": 87,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "thymic",
+      "term": "thymic carcinoma",
+      "n": 53,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "ocular",
+      "term": "uveal melanoma",
+      "n": 186,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "ocular",
+      "term": "retinoblastoma",
+      "n": 83,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "merkel",
+      "term": "Merkel cell carcinoma",
+      "n": 85,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "glioma",
+      "term": "glioblastoma",
+      "n": 1416,
+      "pages": 2
+    },
+    {
+      "cohort": "rare",
+      "group": "glioma",
+      "term": "glioma",
+      "n": 2109,
+      "pages": 3
+    },
+    {
+      "cohort": "rare",
+      "group": "glioma",
+      "term": "astrocytoma",
+      "n": 1477,
+      "pages": 2
+    },
+    {
+      "cohort": "rare",
+      "group": "glioma",
+      "term": "medulloblastoma",
+      "n": 237,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "glioma",
+      "term": "ependymoma",
+      "n": 241,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "glioma",
+      "term": "diffuse intrinsic pontine glioma",
+      "n": 71,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "pedsolid",
+      "term": "neuroblastoma",
+      "n": 508,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "pedsolid",
+      "term": "Wilms tumor",
+      "n": 188,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "pedsolid",
+      "term": "hepatoblastoma",
+      "n": 39,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "bone",
+      "term": "chordoma",
+      "n": 40,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "headneck",
+      "term": "salivary gland cancer",
+      "n": 297,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "headneck",
+      "term": "nasopharyngeal carcinoma",
+      "n": 472,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "headneck",
+      "term": "anaplastic thyroid cancer",
+      "n": 58,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "headneck",
+      "term": "medullary thyroid cancer",
+      "n": 113,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gi",
+      "term": "anal cancer",
+      "n": 255,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gi",
+      "term": "small bowel adenocarcinoma",
+      "n": 203,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gi",
+      "term": "appendiceal cancer",
+      "n": 55,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gi",
+      "term": "pseudomyxoma peritonei",
+      "n": 17,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gyn",
+      "term": "vulvar cancer",
+      "n": 162,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gyn",
+      "term": "vaginal cancer",
+      "n": 240,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gyn",
+      "term": "gestational trophoblastic",
+      "n": 66,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gu",
+      "term": "penile cancer",
+      "n": 85,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gu",
+      "term": "urethral cancer",
+      "n": 114,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gu",
+      "term": "testicular cancer",
+      "n": 290,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "gu",
+      "term": "germ cell tumor",
+      "n": 5537,
+      "pages": 6
+    },
+    {
+      "cohort": "rare",
+      "group": "ctcl",
+      "term": "cutaneous T-cell lymphoma",
+      "n": 515,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "ctcl",
+      "term": "mycosis fungoides",
+      "n": 375,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "leukemia",
+      "term": "acute myeloid leukemia",
+      "n": 2727,
+      "pages": 3
+    },
+    {
+      "cohort": "rare",
+      "group": "leukemia",
+      "term": "acute lymphoblastic leukemia",
+      "n": 2018,
+      "pages": 3
+    },
+    {
+      "cohort": "rare",
+      "group": "leukemia",
+      "term": "chronic myeloid leukemia",
+      "n": 1377,
+      "pages": 2
+    },
+    {
+      "cohort": "rare",
+      "group": "lymphoma",
+      "term": "Hodgkin lymphoma",
+      "n": 4329,
+      "pages": 5
+    },
+    {
+      "cohort": "rare",
+      "group": "lymphoma",
+      "term": "mantle cell lymphoma",
+      "n": 928,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "lymphoma",
+      "term": "Burkitt lymphoma",
+      "n": 688,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "lymphoma",
+      "term": "Waldenstrom macroglobulinemia",
+      "n": 411,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "lymphoma",
+      "term": "hairy cell leukemia",
+      "n": 200,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "lymphoma",
+      "term": "primary CNS lymphoma",
+      "n": 227,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "mpn",
+      "term": "myelofibrosis",
+      "n": 461,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "mpn",
+      "term": "polycythemia vera",
+      "n": 257,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "mpn",
+      "term": "essential thrombocythemia",
+      "n": 243,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "breastrare",
+      "term": "metaplastic breast cancer",
+      "n": 1,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "breastrare",
+      "term": "metaplastic breast carcinoma",
+      "n": 1,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "breastrare",
+      "term": "inflammatory breast cancer",
+      "n": 128,
+      "pages": 1
+    },
+    {
+      "cohort": "rare",
+      "group": "breastrare",
+      "term": "male breast cancer",
+      "n": 860,
+      "pages": 1
+    },
+    {
+      "cohort": "common",
+      "group": "breast",
+      "term": "breast cancer",
+      "n": 9805,
+      "pages": 10
+    },
+    {
+      "cohort": "common",
+      "group": "lung",
+      "term": "non-small cell lung cancer",
+      "n": 4687,
+      "pages": 5
+    },
+    {
+      "cohort": "common",
+      "group": "colorectal",
+      "term": "colorectal cancer",
+      "n": 5490,
+      "pages": 6
+    },
+    {
+      "cohort": "common",
+      "group": "colorectal",
+      "term": "colon cancer",
+      "n": 4670,
+      "pages": 5
+    },
+    {
+      "cohort": "common",
+      "group": "colorectal",
+      "term": "rectal cancer",
+      "n": 4549,
+      "pages": 5
+    },
+    {
+      "cohort": "common",
+      "group": "prostate",
+      "term": "prostate cancer",
+      "n": 4532,
+      "pages": 5
+    }
+  ],
+  "fieldsMode": "fields"
+}

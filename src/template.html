@@ -612,10 +612,15 @@ function dumbbell(o, max) {
       el('p', { class: 'note' }, 'Groups marked near the line are dropped in one of the stress tests below.'));
   }
 
+  // Who labeled the audit sample is read from audit/results.json, so the page never claims a hand audit that did not happen.
+  const byAuthor = !AUDIT || !AUDIT.auditor || AUDIT.auditor === CFG.author;
+  const agreeText = (who) => `On the five reason groups ${who} agreed on ${pct(AUDIT.group.agreement)} of them (Cohen’s kappa ${AUDIT.group.kappa.toFixed(2)}). On the finer eight categories, ${pct(AUDIT.category.agreement)} (kappa ${AUDIT.category.kappa.toFixed(2)}).`;
+  const deviationsLink = CFG.repoUrl ? link(`${CFG.repoUrl}/blob/main/DEVIATIONS.md`, 'DEVIATIONS.md') : 'DEVIATIONS.md';
   sect('Did the coding hold up?',
-    el('p', {}, 'The registry stores the reason as free text, so a rule-based coder sorts it into categories. A coder can be wrong in a direction that flatters a hypothesis, so I checked it by hand.'),
-    AUDIT ? el('p', {}, `I labeled ${AUDIT.n} randomly chosen reasons myself without seeing the coder's answer. On the five reason groups we agreed on ${pct(AUDIT.group.agreement)} of them (Cohen’s kappa ${AUDIT.group.kappa.toFixed(2)}). On the finer eight categories, ${pct(AUDIT.category.agreement)} (kappa ${AUDIT.category.kappa.toFixed(2)}).`)
-      : el('p', {}, el('span', { class: 'dev' }, 'Dev build: hand audit not done yet. Run the audit before deploying so this paragraph can report it.')));
+    el('p', {}, `The registry stores the reason as free text, so a rule-based coder sorts it into categories. A coder can be wrong in a direction that flatters a hypothesis, so ${byAuthor ? 'I checked it by hand' : 'it was checked against a second, independent set of labels'}.`),
+    !AUDIT ? el('p', {}, el('span', { class: 'dev' }, 'Dev build: hand audit not done yet. Run the audit before deploying so this paragraph can report it.'))
+      : byAuthor ? el('p', {}, `I labeled ${AUDIT.n} randomly chosen reasons myself without seeing the coder's answer. ${agreeText('we')}`)
+        : el('p', {}, `The pre-registration said I would label ${AUDIT.n} randomly chosen reasons by hand. I did not. An AI model, ${AUDIT.auditor.replace(/\s*\(AI model\)$/, '')}, labeled them instead, seeing only the sponsor’s words and not the coder’s answer. This is logged in `, deviationsLink, `. ${agreeText('the model and the coder')}`));
 
   const f = DATA.flow;
   const ks = f.keptByStatus || {};

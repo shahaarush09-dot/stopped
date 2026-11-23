@@ -1,0 +1,129 @@
+{
+  "n": 100,
+  "category": {
+    "agreement": 0.81,
+    "kappa": 0.7454448017148982
+  },
+  "group": {
+    "agreement": 0.86,
+    "kappa": 0.8045511657126904
+  },
+  "disagreements": [
+    {
+      "id": "NCT00818090",
+      "human": "SCIENCE",
+      "classifier": "OTHER",
+      "text": "marginal statistical significance"
+    },
+    {
+      "id": "NCT00459901",
+      "human": "BUSINESS",
+      "classifier": "OTHER",
+      "text": "Study halted by drug manufacturer"
+    },
+    {
+      "id": "NCT03488225",
+      "human": "ACCRUAL",
+      "classifier": "LANDSCAPE",
+      "text": "the study was closed early due to competing trials"
+    },
+    {
+      "id": "NCT04409223",
+      "human": "BUSINESS",
+      "classifier": "OTHER",
+      "text": "R\\&D strategy adjustment"
+    },
+    {
+      "id": "NCT01200810",
+      "human": "OPERATIONAL",
+      "classifier": "OTHER",
+      "text": "Drug was no longer available"
+    },
+    {
+      "id": "NCT00771381",
+      "human": "OPERATIONAL",
+      "classifier": "FUNDING",
+      "text": "Retirement of former Qualified Investigator and lack of resources to complete study"
+    },
+    {
+      "id": "NCT02575066",
+      "human": "SCIENCE",
+      "classifier": "OTHER",
+      "text": "stopping rule"
+    },
+    {
+      "id": "NCT03152929",
+      "human": "LANDSCAPE",
+      "classifier": "OTHER",
+      "text": "Standards of care changed at the institution so that PEC procedures were no longer common or preferred as a method of pain control for breast surgery."
+    },
+    {
+      "id": "NCT00396487",
+      "human": "ACCRUAL",
+      "classifier": "OTHER",
+      "text": "Only one patient included as per Feb. 4, 2008."
+    },
+    {
+      "id": "NCT01374451",
+      "human": "SCIENCE",
+      "classifier": "OTHER",
+      "text": "The study was stopped for not meeting the primary endpoint for PFS."
+    },
+    {
+      "id": "NCT03132155",
+      "human": "SCIENCE",
+      "classifier": "OTHER",
+      "text": "Prematurely terminated due to lack of therapeutic effect"
+    },
+    {
+      "id": "NCT04725214",
+      "human": "OPERATIONAL",
+      "classifier": "ACCRUAL",
+      "text": "The trial was terminated early because free anlotinib was no longer available for newly enrolled patients."
+    },
+    {
+      "id": "NCT01754519",
+      "human": "OPERATIONAL",
+      "classifier": "OTHER",
+      "text": "IDE not submitted"
+    },
+    {
+      "id": "NCT05420636",
+      "human": "SCIENCE",
+      "classifier": "ACCRUAL",
+      "text": "Closed to accrual due to low probability of successful outcomes"
+    },
+    {
+      "id": "NCT02257619",
+      "human": "ACCRUAL",
+      "classifier": "BUSINESS",
+      "text": "Sponsor decision to not initiate part 2 due to slow enrollment and competing trials."
+    },
+    {
+      "id": "NCT01471197",
+      "human": "OTHER",
+      "classifier": "OPERATIONAL",
+      "text": "Administrative reasons"
+    },
+    {
+      "id": "NCT05092880",
+      "human": "OPERATIONAL",
+      "classifier": "OTHER",
+      "text": "The medical deviced studied was taken off market"
+    },
+    {
+      "id": "NCT03354611",
+      "human": "ACCRUAL",
+      "classifier": "OTHER",
+      "text": "The study progress doesn't meet the sponsor's requirement"
+    },
+    {
+      "id": "NCT03291054",
+      "human": "BUSINESS",
+      "classifier": "FUNDING",
+      "text": "Study ended prematurely at the request of the funding sponsor."
+    }
+  ],
+  "auditor": "Claude Opus 5.5 (AI model)",
+  "completedAt": "2026-11-23T21:40:00.000Z"
+}
