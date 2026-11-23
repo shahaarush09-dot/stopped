@@ -1,0 +1,14 @@
+node_modules/
+.DS_Store
+Thumbs.db
+
+# Synthetic test output. Never commit or deploy these.
+data-fixture/
+dist-fixture/
+
+# Build output. Rebuilt from data/ by "npm run build".
+dist/
+
+# Raw registry pulls are large and reproducible. The pre-registration commit
+# should NOT include them; commit data/trials.json and data/results.json after the run.
+data/raw/

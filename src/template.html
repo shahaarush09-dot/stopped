@@ -1,0 +1,686 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>__TITLE__</title>
+<meta name="description" content="__DESCRIPTION__">
+<meta property="og:title" content="__TITLE__">
+<meta property="og:description" content="__DESCRIPTION__">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary">
+<meta name="color-scheme" content="light">
+<meta name="theme-color" content="#f3f5f6">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23151b21'/%3E%3Ccircle cx='11' cy='11' r='4.2' fill='%233987e5'/%3E%3Ccircle cx='21' cy='11' r='4.2' fill='%23d95926'/%3E%3Ccircle cx='11' cy='21' r='4.2' fill='%23199e70'/%3E%3Ccircle cx='21' cy='21' r='3.6' fill='none' stroke='%23a3b3c0' stroke-width='1.4'/%3E%3C/svg%3E">
+<style>
+/*__FONTS__*/
+:root {
+  color-scheme: light;
+  --paper: #f3f5f6;
+  --ink: #17212b;
+  --ink-2: #44525f;
+  --ink-3: #5f6d7a;
+  --rule: #cbd3d9;
+  --rule-soft: #e0e6ea;
+  --field: #151b21;
+  --field-2: #1d252d;
+  --field-ink: #eaeff3;
+  --field-ink-2: #a3b3c0;
+  --field-rule: #2c3741;
+  --c-science: #3987e5;
+  --c-money: #d95926;
+  --c-accrual: #199e70;
+  --c-world: #c98500;
+  --c-other: #7f8d99;
+  --l-science: #2a78d6;
+  --l-money: #eb6834;
+  --l-accrual: #1baf7a;
+  --serif: 'Literata', Georgia, 'Times New Roman', serif;
+  --sans: 'Public Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.0625rem/1.68 var(--serif); }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+.field :focus-visible { outline-color: var(--field-ink); }
+.wrap { max-width: 74rem; margin: 0 auto; padding: 0 1.25rem; }
+.measure { max-width: 40rem; }
+h1, h2, h3 { font-family: var(--serif); font-weight: 600; margin: 0; letter-spacing: -0.012em; }
+h1 { font-size: clamp(1.75rem, 3.5vw, 2.7rem); line-height: 1.12; max-width: 46rem; }
+h2 { font-size: clamp(1.45rem, 2.4vw, 1.9rem); line-height: 1.2; margin-bottom: 0.75rem; }
+h3 { font-size: 1.15rem; line-height: 1.3; }
+p { margin: 0 0 1rem; }
+.sans { font-family: var(--sans); }
+.num { font-variant-numeric: tabular-nums; font-family: var(--sans); }
+
+/* dev banner for synthetic data */
+.fixture { position: sticky; top: 0; z-index: 50; background: #b3261e; color: #fff; font: 600 0.875rem/1.4 var(--sans); padding: 0.55rem 1.25rem; text-align: center; }
+
+.top { padding: 1.1rem 0; font-family: var(--sans); font-size: 0.9375rem; display: flex; gap: 0.75rem; align-items: baseline; flex-wrap: wrap; }
+.top strong { font-weight: 600; font-size: 1.0625rem; letter-spacing: -0.01em; }
+.top span { color: var(--ink-3); }
+
+.lead { padding: 2.2rem 0 2.6rem; }
+.deck { font-size: 1.1875rem; line-height: 1.6; color: var(--ink-2); max-width: 40rem; margin-top: 1.25rem; }
+
+/* the field */
+.field { background: var(--field); color: var(--field-ink); padding: 2.4rem 0 2.2rem; }
+.field h2 { color: var(--field-ink); }
+.field .intro { color: var(--field-ink-2); max-width: 38rem; font-size: 1rem; }
+.controls { display: flex; flex-wrap: wrap; gap: 0.5rem 0.4rem; align-items: center; margin: 1.1rem 0 1.4rem; font-family: var(--sans); font-size: 0.875rem; }
+.chip { appearance: none; background: transparent; border: 1px solid var(--field-rule); color: var(--field-ink); font: 500 0.875rem/1 var(--sans); padding: 0.6rem 0.8rem; min-height: 2.5rem; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; border-radius: 2px; }
+.chip:hover { border-color: var(--field-ink-2); }
+.chip[aria-pressed="true"] { background: var(--field-ink); color: var(--field); border-color: var(--field-ink); }
+.chip .sw { width: 0.7rem; height: 0.7rem; border-radius: 50%; display: inline-block; flex: none; }
+.chip .n { color: var(--field-ink-2); font-variant-numeric: tabular-nums; }
+.chip[aria-pressed="true"] .n { color: #3a4752; }
+.controls select { background: var(--field); color: var(--field-ink); border: 1px solid var(--field-rule); font: 500 0.875rem var(--sans); padding: 0.6rem 0.6rem; min-height: 2.5rem; margin-left: auto; border-radius: 2px; max-width: 100%; }
+.panels { display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem; align-items: start; }
+@media (max-width: 860px) { .panels { grid-template-columns: 1fr; gap: 2rem; } .controls select { margin-left: 0; } }
+.panel h3 { color: var(--field-ink); font-size: 1.05rem; }
+.panel .panel-sub { font: 400 0.8125rem/1.4 var(--sans); color: var(--field-ink-2); margin: 0.15rem 0 0.7rem; }
+.panel canvas { width: 100%; display: block; touch-action: pan-y; cursor: crosshair; }
+.detail { margin-top: 1.8rem; border-top: 1px solid var(--field-rule); padding-top: 1.3rem; max-width: 46rem; min-height: 9.5rem; }
+.detail .quote { font: italic 400 1.3rem/1.5 var(--serif); margin: 0 0 0.8rem; padding: 0; color: var(--field-ink); }
+.detail .meta, .detail .ttl { font: 400 0.875rem/1.5 var(--sans); color: var(--field-ink-2); margin: 0 0 0.35rem; }
+.detail a { font: 500 0.875rem var(--sans); color: var(--field-ink); }
+.tip { position: absolute; z-index: 5; pointer-events: none; background: #0d1217; border: 1px solid var(--field-rule); padding: 0.65rem 0.8rem; width: min(20rem, 80vw); font: 400 0.8125rem/1.45 var(--sans); color: var(--field-ink-2); box-shadow: 0 6px 24px rgba(0,0,0,.45); }
+.tip[hidden] { display: none; }
+.tip q { display: block; font: italic 400 0.9375rem/1.45 var(--serif); color: var(--field-ink); quotes: none; margin-bottom: 0.35rem; }
+details.tableview { margin-top: 1.6rem; font-family: var(--sans); font-size: 0.875rem; }
+details.tableview summary { cursor: pointer; color: var(--field-ink-2); width: fit-content; }
+details.tableview table { margin-top: 0.8rem; border-collapse: collapse; color: var(--field-ink); width: 100%; max-width: 40rem; }
+details.tableview th, details.tableview td { padding: 0.4rem 0.6rem 0.4rem 0; text-align: right; border-bottom: 1px solid var(--field-rule); font-variant-numeric: tabular-nums; }
+details.tableview th:first-child, details.tableview td:first-child { text-align: left; }
+details.tableview th { font-weight: 600; color: var(--field-ink-2); }
+
+section.block { padding: 3.4rem 0 0.5rem; }
+section.block + section.block { padding-top: 2.6rem; }
+.note { font: 400 0.875rem/1.55 var(--sans); color: var(--ink-3); max-width: 40rem; }
+
+/* result rows */
+.out { padding: 1.5rem 0 1.2rem; border-top: 1px solid var(--rule); max-width: 50rem; }
+.out-head { display: flex; align-items: baseline; gap: 0.6rem 1rem; flex-wrap: wrap; justify-content: space-between; }
+.out-head h3 { display: flex; align-items: center; gap: 0.6rem; }
+.out-head .sw { width: 0.8rem; height: 0.8rem; border-radius: 50%; flex: none; }
+.verdict { font: 600 0.875rem var(--sans); display: inline-flex; align-items: center; gap: 0.4rem; }
+.verdict svg { flex: none; }
+.out svg.plot { width: 100%; height: auto; display: block; margin: 0.4rem 0 0.2rem; overflow: visible; }
+.out p.stats { font: 400 0.9375rem/1.55 var(--serif); color: var(--ink-2); margin: 0.4rem 0 0; }
+.key { display: flex; gap: 1.2rem; flex-wrap: wrap; font: 400 0.8125rem var(--sans); color: var(--ink-2); margin: 0.9rem 0 1.1rem; }
+.key i { display: inline-block; width: 0.75rem; height: 0.75rem; border-radius: 50%; margin-right: 0.45rem; vertical-align: -1px; }
+
+/* quotes */
+.words-controls { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: 1rem 0 1.4rem; }
+.words-controls .chip { color: var(--ink); border-color: var(--rule); }
+.words-controls .chip:hover { border-color: var(--ink-3); }
+.words-controls .chip[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.words-controls .chip .n { color: var(--ink-3); }
+.words-controls .chip[aria-pressed="true"] .n { color: #b6c2cc; }
+.quotes { display: grid; grid-template-columns: repeat(auto-fill, minmax(17.5rem, 1fr)); gap: 0 2.2rem; max-width: 62rem; }
+.q { border-top: 1px solid var(--rule); padding: 1rem 0 1.3rem; }
+.q blockquote { margin: 0 0 0.45rem; font: italic 400 1.0625rem/1.5 var(--serif); }
+.q .by { font: 400 0.8125rem/1.45 var(--sans); color: var(--ink-3); }
+.q .by a { color: var(--ink-2); }
+button.plain { appearance: none; background: transparent; border: 1px solid var(--ink); color: var(--ink); font: 500 0.875rem var(--sans); padding: 0.65rem 1rem; min-height: 2.5rem; cursor: pointer; border-radius: 2px; margin-top: 0.4rem; }
+button.plain:hover { background: var(--ink); color: var(--paper); }
+
+/* cancer by cancer */
+.cc { max-width: 52rem; margin-top: 1.4rem; }
+.cc-row { display: grid; grid-template-columns: minmax(9rem, 14rem) 1fr 3.2rem 4.6rem; gap: 0.8rem; align-items: center; border-top: 1px solid var(--rule-soft); padding: 0.15rem 0; font: 400 0.875rem/1.3 var(--sans); }
+.cc-row .n { text-align: right; color: var(--ink-3); font-variant-numeric: tabular-nums; }
+.cc-row svg { width: 100%; height: 26px; display: block; overflow: visible; }
+.cc-head { font-weight: 600; color: var(--ink-2); border-top: 0; align-items: end; padding-bottom: 0.35rem; }
+@media (max-width: 560px) {
+  .cc-row { grid-template-columns: 1fr 3rem 4rem; }
+  .cc-row svg, .cc-row .plotcell { grid-column: 1 / -1; grid-row: 2; }
+  .cc-head .plotcell { font-weight: 400; color: var(--ink-3); }
+}
+.src { font-size: 0.8125rem; color: var(--ink-3); }
+.src a { color: var(--ink-2); }
+table.t td.l { text-align: left; }
+details.more { margin: 0.6rem 0 1rem; max-width: 52rem; }
+details.more > summary { cursor: pointer; width: fit-content; font: 500 0.9375rem/1.4 var(--sans); color: var(--ink); padding: 0.55rem 0; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+details.more > summary:hover { text-decoration-thickness: 2px; }
+details.more[open] > summary { margin-bottom: 0.2rem; }
+.prior li { margin-bottom: 0.6rem; }
+.words-controls .sep { width: 1px; background: var(--rule); margin: 0 0.4rem; align-self: stretch; }
+
+/* method */
+.method h3 { margin: 2rem 0 0.5rem; }
+.method p, .method li { max-width: 40rem; }
+.method ul { padding-left: 1.2rem; margin: 0 0 1rem; }
+.method li { margin-bottom: 0.45rem; }
+table.t { border-collapse: collapse; font: 400 0.875rem/1.4 var(--sans); width: 100%; max-width: 52rem; margin: 0.6rem 0 1rem; }
+table.t th, table.t td { padding: 0.45rem 0.7rem 0.45rem 0; border-top: 1px solid var(--rule-soft); text-align: right; vertical-align: top; font-variant-numeric: tabular-nums; }
+table.t th:first-child, table.t td:first-child { text-align: left; }
+table.t th { font-weight: 600; color: var(--ink-2); border-top: 0; border-bottom: 1px solid var(--rule); }
+table.t tr.sum td { font-weight: 600; border-top: 1px solid var(--rule); }
+table.t td.sig { font-weight: 600; }
+.tablewrap { overflow-x: auto; }
+pre { background: #e8edf0; padding: 1rem 1.1rem; font: 400 0.8125rem/1.6 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; overflow-x: auto; max-width: 40rem; margin: 0.6rem 0 1rem; }
+.dev { background: #fbe9e7; color: #7a1c14; padding: 0.15rem 0.4rem; font: 600 0.8125rem var(--sans); }
+footer { margin-top: 4rem; padding: 2rem 0 3rem; border-top: 1px solid var(--rule); font: 400 0.875rem/1.6 var(--sans); color: var(--ink-3); }
+footer p { max-width: 44rem; }
+.vh { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+</style>
+</head>
+<body>
+<div id="fixture" class="fixture" hidden>Synthetic test data. None of these numbers are real, and this build cannot be deployed.</div>
+
+<div class="wrap">
+  <header class="top"><strong id="siteName">Stopped</strong><span id="siteSub"></span></header>
+</div>
+
+<main id="main">
+<div class="wrap">
+  <section class="lead">
+    <h1 id="headline"></h1>
+    <p class="deck" id="deck"></p>
+  </section>
+</div>
+
+<section class="field" aria-labelledby="fieldHead">
+  <div class="wrap" id="fieldWrap" style="position:relative">
+    <h2 id="fieldHead">Every dot is a trial that ended early</h2>
+    <p class="intro">Each trial is colored by the reason its sponsor gave. Tap or hover a dot to read the sponsor&rsquo;s own words. Click a color to isolate it.</p>
+    <div class="controls" id="controls"></div>
+    <div class="panels" id="panels"></div>
+    <div class="detail" id="detail" aria-live="polite"></div>
+    <details class="tableview"><summary>View the same numbers as a table</summary><div id="tableHost"></div></details>
+    <div class="tip" id="tip" hidden></div>
+  </div>
+</section>
+
+<div class="wrap">
+  <section class="block" aria-labelledby="resultHead">
+    <h2 id="resultHead">Does the gap hold up?</h2>
+    <p class="measure" id="resultIntro"></p>
+    <div id="outcomes"></div>
+    <p class="note" id="outcomeNote"></p>
+  </section>
+
+  <section class="block" aria-labelledby="wordsHead">
+    <h2 id="wordsHead">What sponsors wrote</h2>
+    <p class="measure">The registry asks every sponsor that stops a trial to say why, in its own words. Six are drawn at random from the full set. Switch between rare and common cancers to compare.</p>
+    <div class="words-controls" id="wordsControls"></div>
+    <div class="quotes" id="quotes"></div>
+    <button class="plain" id="shuffle" type="button">Show different ones</button>
+  </section>
+
+  <section class="block" aria-labelledby="ccHead">
+    <h2 id="ccHead">Cancer by cancer</h2>
+    <p class="measure">For each rare cancer group: the share of its early stops that came from what the trial found, and the share of its finished trials that stopped early at all. This is descriptive only, with no tests. Most groups are small, so one or two trials can move a dot a long way. Open dots have fewer than 15 trials with a stated reason.</p>
+    <div class="cc" id="cc"></div>
+    <p class="note" id="ccFoot"></p>
+  </section>
+
+  <section class="block method" aria-labelledby="methodHead">
+    <h2 id="methodHead">How this was checked</h2>
+    <div id="method"></div>
+  </section>
+</div>
+</main>
+
+<div class="wrap">
+  <footer>
+    <p id="footA"></p>
+    <p id="footB"></p>
+  </footer>
+</div>
+
+<noscript><div class="wrap"><p>This page draws its charts with JavaScript. The full numbers are in the project repository.</p></div></noscript>
+
+<script>
+(() => {
+'use strict';
+const DATA = __DATA__;
+const CFG = __CONFIG__;
+const AUDIT = __AUDIT__;
+const DEPLOY = __DEPLOY__;
+
+/*__NARRATIVE__*/
+
+// ---- tiny DOM helpers (all text goes through textContent) ------------------------------------
+const SVGNS = 'http://www.w3.org/2000/svg';
+function el(tag, attrs, ...kids) {
+  const n = document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) { if (v != null) n.setAttribute(k, v); }
+  for (const k of kids.flat(Infinity)) { if (k == null) continue; n.append(k instanceof Node ? k : document.createTextNode(String(k))); }
+  return n;
+}
+function sv(tag, attrs, ...kids) {
+  const n = document.createElementNS(SVGNS, tag);
+  for (const [k, v] of Object.entries(attrs || {})) { if (v != null) n.setAttribute(k, v); }
+  for (const k of kids.flat(Infinity)) { if (k == null) continue; n.append(k instanceof Node ? k : document.createTextNode(String(k))); }
+  return n;
+}
+const $ = (s) => document.querySelector(s);
+const safeNct = (s) => (/^NCT\d{8}$/.test(s) ? s : null);
+
+// ---- data ------------------------------------------------------------------------------------
+const GROUPS = DATA.groups;
+const BAND_ORDER = ['SCIENCE', 'MONEY', 'ACCRUAL', 'WORLD', 'OTHER', null];
+const DARK = { SCIENCE: '#3987e5', MONEY: '#d95926', ACCRUAL: '#199e70', WORLD: '#c98500', OTHER: '#7f8d99' };
+const LIGHT = { SCIENCE: '#2a78d6', MONEY: '#eb6834', ACCRUAL: '#1baf7a' };
+const GHOST = '#6b7a87';
+const items = DATA.rows.map((r) => {
+  const cat = DATA.categories[r[6]];
+  return { nct: r[0], cohort: r[1], cond: r[2], year: r[3], phase: r[4], sponsor: r[5], cat, group: DATA.categoryGroup[cat] ?? null, title: r[7], reason: r[8] };
+});
+const condLabel = (i) => DATA.conditions[i]?.label ?? 'Cancer';
+const rareItems = items.filter((t) => t.cohort === 0);
+const commonItems = items.filter((t) => t.cohort === 1);
+const res = DATA.results;
+const P = res.primary;
+
+// ---- header, headline, deck -------------------------------------------------------------------
+document.title = `${CFG.title}: ${headlineFor(res).split('.')[0]}.`;
+$('#siteName').textContent = CFG.title;
+$('#siteSub').textContent = `An audit by the ${CFG.org}`;
+$('#headline').textContent = headlineFor(res);
+$('#deck').textContent = deckFor(res, DATA.conditions);
+if (DATA.meta.isFixture) $('#fixture').hidden = false;
+
+// ---- the field --------------------------------------------------------------------------------
+const state = { group: null, cond: null, hover: null, selected: null };
+const panels = [];
+const dpr = Math.min(window.devicePixelRatio || 1, 2);
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const isActive = (t) => (state.group === null || t.group === state.group) && (state.cond === null || t.cond === state.cond);
+
+function makePanel(list, heading, sub, aria) {
+  const host = el('div', { class: 'panel' }, el('h3', {}, heading), el('p', { class: 'panel-sub' }, sub));
+  const canvas = el('canvas', { role: 'img', 'aria-label': aria });
+  host.append(canvas);
+  $('#panels').append(host);
+  const ctx = canvas.getContext('2d');
+  const stated = list.filter((t) => t.group !== null).length;
+  const bands = BAND_ORDER.map((g) => ({ g, items: list.filter((t) => t.group === g).sort((a, b) => a.cond - b.cond || (a.year || 0) - (b.year || 0)) })).filter((b) => b.items.length);
+  const total = list.length;
+  const HEAD_H = 30, GAP_H = 14, PAD = 2;
+  let W = 0, H = 0, pitch = 8.4, cols = 1, progress = reduce ? 1 : 0;
+
+  function layout() {
+    W = Math.max(240, Math.floor(host.clientWidth));
+    pitch = W < 480 ? 7.2 : 8.4;
+    cols = Math.max(8, Math.floor((W - 2 * PAD) / pitch));
+    let y = 2;
+    for (const b of bands) {
+      b.y0 = y; b.top = y + HEAD_H; b.rows = Math.ceil(b.items.length / cols);
+      b.items.forEach((t, k) => { t.x = PAD + ((k % cols) + 0.5) * pitch; t.y = b.top + (Math.floor(k / cols) + 0.5) * pitch; });
+      y = b.top + b.rows * pitch + GAP_H;
+    }
+    H = Math.ceil(y);
+    canvas.style.height = `${H}px`;
+    canvas.width = Math.round(W * dpr); canvas.height = Math.round(H * dpr);
+  }
+  function dot(t, alpha, grow) {
+    const r = pitch * 0.34 + (grow || 0);
+    ctx.globalAlpha = alpha;
+    ctx.beginPath(); ctx.arc(t.x, t.y, r, 0, 6.2832);
+    if (t.group === null) { ctx.lineWidth = 1; ctx.strokeStyle = GHOST; ctx.stroke(); }
+    else { ctx.fillStyle = DARK[t.group]; ctx.fill(); }
+    ctx.globalAlpha = 1;
+  }
+  function draw() {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    ctx.clearRect(0, 0, W, H);
+    const limit = Math.floor(progress * total);
+    let n = 0;
+    for (const b of bands) {
+      ctx.textBaseline = 'alphabetic';
+      ctx.font = '600 13px "Public Sans", system-ui, sans-serif';
+      ctx.fillStyle = b.g ? '#eaeff3' : '#a3b3c0';
+      const label = b.g ? GROUPS[b.g] : 'No reason given';
+      ctx.fillText(label, 0, b.y0 + 17);
+      const w = ctx.measureText(label).width;
+      ctx.font = '400 13px "Public Sans", system-ui, sans-serif';
+      ctx.fillStyle = '#a3b3c0';
+      const share = b.g && stated ? `${Math.round((b.items.length / stated) * 100)}%  ` : '';
+      ctx.fillText(`${share}${b.items.length.toLocaleString('en-US')} trial${b.items.length === 1 ? '' : 's'}`, w + 10, b.y0 + 17);
+      for (const t of b.items) {
+        if (n++ >= limit) continue;
+        dot(t, isActive(t) ? (t.group === null ? 0.9 : 1) : 0.13, 0);
+      }
+    }
+    // Rings wait for the reveal, so a selected dot is never outlined before it is drawn.
+    for (const t of progress >= 1 ? [state.hover, state.selected] : []) {
+      if (t && panelOf(t) === api && isActive(t)) {
+        ctx.beginPath(); ctx.arc(t.x, t.y, pitch * 0.34 + 3, 0, 6.2832);
+        ctx.lineWidth = 1.5; ctx.strokeStyle = '#eaeff3'; ctx.stroke();
+      }
+    }
+  }
+  function hit(x, y) {
+    for (const b of bands) {
+      if (y >= b.top && y < b.top + b.rows * pitch) {
+        const col = Math.floor((x - PAD) / pitch), row = Math.floor((y - b.top) / pitch);
+        if (col < 0 || col >= cols) return null;
+        return b.items[row * cols + col] ?? null;
+      }
+    }
+    return null;
+  }
+  function reveal() {
+    if (progress >= 1) return;
+    const t0 = performance.now(), dur = 1100;
+    const step = (now) => { const k = Math.min(1, (now - t0) / dur); progress = 1 - Math.pow(1 - k, 3); draw(); if (k < 1) requestAnimationFrame(step); };
+    requestAnimationFrame(step);
+  }
+  const api = { host, canvas, list, layout, draw, hit, reveal, redraw() { layout(); draw(); } };
+  canvas.addEventListener('pointermove', (e) => {
+    const r = canvas.getBoundingClientRect();
+    const t = api.hit(e.clientX - r.left, e.clientY - r.top);
+    if (e.pointerType === 'touch') return;
+    if (t !== state.hover) { state.hover = t && isActive(t) ? t : null; drawAll(); showTip(state.hover, e); }
+    else if (t) moveTip(e);
+  });
+  canvas.addEventListener('pointerleave', () => { state.hover = null; hideTip(); drawAll(); });
+  canvas.addEventListener('click', (e) => {
+    const r = canvas.getBoundingClientRect();
+    const t = api.hit(e.clientX - r.left, e.clientY - r.top);
+    if (t && isActive(t)) select(t);
+  });
+  panels.push(api);
+  return api;
+}
+const panelOf = (t) => panels.find((p) => p.list === (t.cohort === 0 ? rareItems : commonItems));
+const drawAll = () => panels.forEach((p) => p.draw());
+
+const statedOf = (list) => list.filter((t) => t.group !== null).length;
+makePanel(rareItems, 'Rare cancers', `${statedOf(rareItems).toLocaleString('en-US')} trials gave a reason, ${(rareItems.length - statedOf(rareItems)).toLocaleString('en-US')} did not`,
+  `Chart of ${rareItems.length} rare cancer trials that ended early, one dot each, grouped by the reason given. Shares are listed in the table below.`);
+makePanel(commonItems, 'Common cancers', `${statedOf(commonItems).toLocaleString('en-US')} trials gave a reason, ${(commonItems.length - statedOf(commonItems)).toLocaleString('en-US')} did not`,
+  `Chart of ${commonItems.length} common cancer trials that ended early, one dot each, grouped by the reason given. Shares are listed in the table below.`);
+
+// tooltip
+const tip = $('#tip'), fieldWrap = $('#fieldWrap');
+function showTip(t, e) {
+  if (!t) { hideTip(); return; }
+  tip.replaceChildren(el('q', {}, t.reason || 'No reason given'), `${condLabel(t.cond)}, started ${t.year}`);
+  tip.hidden = false; moveTip(e);
+}
+function moveTip(e) {
+  const r = fieldWrap.getBoundingClientRect();
+  let x = e.clientX - r.left + 14, y = e.clientY - r.top + 16;
+  const w = tip.offsetWidth;
+  if (x + w > r.width) x = e.clientX - r.left - w - 14;
+  tip.style.left = `${Math.max(0, x)}px`; tip.style.top = `${y}px`;
+}
+function hideTip() { tip.hidden = true; }
+
+// detail card
+function select(t) {
+  state.selected = t;
+  const d = $('#detail');
+  const nct = safeNct(t.nct);
+  d.replaceChildren(
+    el('blockquote', { class: 'quote' }, t.reason ? `“${t.reason}”` : 'No reason given.'),
+    el('p', { class: 'meta' }, `${condLabel(t.cond)}, started ${t.year}, Phase ${t.phase ? '3 or 2/3' : '2'}, ${t.sponsor ? 'non-industry' : 'industry'} sponsor. Filed here as: ${t.group ? GROUPS[t.group] : 'no reason given'}.`),
+    el('p', { class: 'ttl' }, t.title),
+    nct ? el('a', { href: `https://clinicaltrials.gov/study/${nct}`, target: '_blank', rel: 'noopener noreferrer' }, `Open ${nct} in the registry`) : null
+  );
+  drawAll();
+}
+
+// legend and filters
+const controls = $('#controls');
+const counts = {};
+for (const g of BAND_ORDER) counts[g] = items.filter((t) => t.group === g).length;
+function chip(g) {
+  const b = el('button', { class: 'chip', type: 'button', 'aria-pressed': 'false' },
+    el('span', { class: 'sw', style: g ? `background:${DARK[g]}` : `border:1px solid ${GHOST}` }), g ? GROUPS[g] : 'No reason given', el('span', { class: 'n' }, counts[g].toLocaleString('en-US')));
+  b.addEventListener('click', () => {
+    state.group = state.group === g ? null : g;
+    controls.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', 'false'));
+    if (state.group === g) b.setAttribute('aria-pressed', 'true');
+    drawAll();
+  });
+  return b;
+}
+for (const g of BAND_ORDER.slice(0, 5)) controls.append(chip(g));
+const sel = el('select', { 'aria-label': 'Highlight one cancer group' }, el('option', { value: '' }, 'All cancer groups'));
+const og = (label, cohort) => {
+  const grp = el('optgroup', { label });
+  DATA.conditions.forEach((c, i) => { const n = items.filter((t) => t.cond === i).length; if (c.cohort === cohort && n) grp.append(el('option', { value: String(i) }, `${c.label} (${n})`)); });
+  return grp;
+};
+sel.append(og('Rare', 'rare'), og('Common', 'common'));
+sel.addEventListener('change', () => { state.cond = sel.value === '' ? null : Number(sel.value); drawAll(); });
+controls.append(sel);
+
+// table view
+(() => {
+  const rows = ['SCIENCE', 'MONEY', 'ACCRUAL', 'WORLD', 'OTHER'].map((g) => [GROUPS[g], g]);
+  const sR = P.cohorts.rare.stated, sC = P.cohorts.common.stated;
+  const body = rows.map(([label, g]) => el('tr', {}, el('td', {}, label),
+    el('td', {}, P.cohorts.rare.byGroup[g].toLocaleString('en-US')), el('td', {}, pct(P.cohorts.rare.byGroup[g] / sR, 1)),
+    el('td', {}, P.cohorts.common.byGroup[g].toLocaleString('en-US')), el('td', {}, pct(P.cohorts.common.byGroup[g] / sC, 1))));
+  body.push(el('tr', {}, el('td', {}, 'No reason given'),
+    el('td', {}, (P.cohorts.rare.all - sR).toLocaleString('en-US')), el('td', {}, pct(P.cohorts.rare.notStated.p, 1)),
+    el('td', {}, (P.cohorts.common.all - sC).toLocaleString('en-US')), el('td', {}, pct(P.cohorts.common.notStated.p, 1))));
+  $('#tableHost').append(el('table', {}, el('thead', {}, el('tr', {}, el('th', {}, 'Reason'), el('th', {}, 'Rare'), el('th', {}, 'Share'), el('th', {}, 'Common'), el('th', {}, 'Share'))), el('tbody', {}, body)));
+})();
+
+// ---- the result: three dumbbells --------------------------------------------------------------
+const OUT_META = {
+  SCIENCE: { title: 'Stopped because of what the trial found', sw: LIGHT.SCIENCE, pred: 'Prediction 1: lower for rare cancers' },
+  MONEY: { title: 'Stopped for money or business reasons', sw: LIGHT.MONEY, pred: 'Prediction 2: higher for rare cancers' },
+  ACCRUAL: { title: 'Stopped because too few patients enrolled', sw: LIGHT.ACCRUAL, pred: 'Prediction 3: higher for rare cancers' },
+  STOPPED: { title: 'Stopped early at all, out of every trial that reached an end', sw: null, pred: 'Prediction 4: higher for rare cancers' },
+};
+const outcomeOf = (k) => (k === 'STOPPED' ? P.stops : P.outcomes[k]);
+const OUT_KEYS = ['SCIENCE', 'MONEY', 'ACCRUAL', 'STOPPED'].filter((k) => outcomeOf(k));
+const ICON = {
+  supported: () => sv('svg', { width: 16, height: 16, viewBox: '0 0 16 16', 'aria-hidden': 'true' }, sv('path', { d: 'M3 8.5l3.2 3.2L13 4.5', fill: 'none', stroke: '#17212b', 'stroke-width': 2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' })),
+  contradicted: () => sv('svg', { width: 16, height: 16, viewBox: '0 0 16 16', 'aria-hidden': 'true' }, sv('path', { d: 'M4 4l8 8M12 4l-8 8', fill: 'none', stroke: '#17212b', 'stroke-width': 2, 'stroke-linecap': 'round' })),
+  inconclusive: () => sv('svg', { width: 16, height: 16, viewBox: '0 0 16 16', 'aria-hidden': 'true' }, sv('path', { d: 'M3.5 8h9', fill: 'none', stroke: '#17212b', 'stroke-width': 2, 'stroke-linecap': 'round' })),
+};
+function dumbbell(o, max) {
+  const W = 720, L = 10, R = 10, plotW = W - L - R, X = (v) => L + (plotW * v) / max;
+  const svg = sv('svg', { class: 'plot', viewBox: `0 0 ${W} 112`, role: 'img', 'aria-label': `Rare ${pct(o.rare.p)}, common ${pct(o.common.p)}` });
+  for (let v = 0; v <= max + 1e-9; v += 0.1) {
+    svg.append(sv('line', { x1: X(v), x2: X(v), y1: 14, y2: 82, stroke: '#e0e6ea', 'stroke-width': 1 }));
+    svg.append(sv('text', { x: X(v), y: 102, 'text-anchor': v === 0 ? 'start' : 'middle', 'font-size': 11, 'font-family': 'Public Sans, sans-serif', fill: '#5f6d7a' }, `${Math.round(v * 100)}%`));
+  }
+  const y = 50;
+  const lo = Math.min(o.rare.p, o.common.p), hi = Math.max(o.rare.p, o.common.p);
+  svg.append(sv('line', { x1: X(lo), x2: X(hi), y1: y, y2: y, stroke: '#8b99a6', 'stroke-width': 2 }));
+  const whisk = (p, color) => { svg.append(sv('line', { x1: X(p.lo), x2: X(p.hi), y1: y, y2: y, stroke: color, 'stroke-width': 1.5 })); for (const v of [p.lo, p.hi]) svg.append(sv('line', { x1: X(v), x2: X(v), y1: y - 6, y2: y + 6, stroke: color, 'stroke-width': 1.5 })); };
+  whisk(o.common, '#8b99a6'); whisk(o.rare, '#17212b');
+  svg.append(sv('circle', { cx: X(o.common.p), cy: y, r: 6, fill: '#f3f5f6', stroke: '#17212b', 'stroke-width': 2 }));
+  svg.append(sv('circle', { cx: X(o.rare.p), cy: y, r: 7, fill: '#17212b', stroke: '#f3f5f6', 'stroke-width': 2 }));
+  const lab = (v, text, dy) => svg.append(sv('text', { x: X(v), y: y + dy, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 600, 'font-family': 'Public Sans, sans-serif', fill: '#17212b' }, text));
+  lab(o.rare.p, `Rare ${pct(o.rare.p)}`, -17);
+  lab(o.common.p, `Common ${pct(o.common.p)}`, 28);
+  return svg;
+}
+(() => {
+  const host = $('#outcomes');
+  const max = Math.min(1, Math.ceil(Math.max(...OUT_KEYS.map((k) => Math.max(outcomeOf(k).rare.hi, outcomeOf(k).common.hi))) * 10) / 10);
+  $('#resultIntro').textContent = 'Before pulling any data I wrote down four predictions and the rule I would use to judge each one. The first three are about trials that stopped early and why. The fourth is about how often trials stop at all. Dots show each cohort\u2019s share, with 95% intervals.';
+  for (const k of OUT_KEYS) {
+    const o = outcomeOf(k), m = OUT_META[k], v = verdictFor(k, o);
+    host.append(el('div', { class: 'out' },
+      el('div', { class: 'out-head' },
+        el('h3', {}, m.sw ? el('span', { class: 'sw', style: `background:${m.sw}` }) : null, m.title),
+        el('span', { class: 'verdict' }, ICON[v.key](), VERDICT_TEXT[v.key] + (v.note ? ` (${v.note})` : ''))),
+      el('p', { class: 'note', style: 'margin:0.2rem 0 0' }, m.pred),
+      dumbbell(o, max),
+      el('p', { class: 'stats' }, outcomeSentence(k, o))));
+  }
+  host.append(el('div', { class: 'key' }, el('span', {}, el('i', { style: 'background:#17212b' }), 'Rare cancers'), el('span', {}, el('i', { style: 'border:2px solid #17212b' }), 'Common cancers'), el('span', {}, 'Lines are 95% intervals')));
+  $('#outcomeNote').textContent = 'Odds ratios compare rare with common cancer trials inside groups that share a sponsor type (industry or not) and a phase, combined with the Mantel-Haenszel method. Below 1 means rare cancer trials were less likely. P-values are adjusted for four comparisons (Holm). A prediction counts as matched only if the adjusted p is under 0.05, the direction is the one predicted, and the gap is at least 5 percentage points.';
+})();
+
+// ---- what sponsors wrote ----------------------------------------------------------------------
+(() => {
+  let wordsGroup = null, wordsCohort = 0, seed = 1;
+  const rng = (s) => () => { s = (s + 0x6d2b79f5) >>> 0; let t = s; t = Math.imul(t ^ (t >>> 15), t | 1); t ^= t + Math.imul(t ^ (t >>> 7), t | 61); return ((t ^ (t >>> 14)) >>> 0) / 4294967296; };
+  const pool = () => (wordsCohort === 0 ? rareItems : commonItems).filter((t) => t.group !== null && (wordsGroup === null || t.group === wordsGroup));
+  function render() {
+    let p = pool();
+    const long = p.filter((t) => t.reason.length >= 18);
+    if (long.length >= 6) p = long;
+    const r = rng(seed * 7919), a = p.slice();
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(r() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+    if (!a.length) { $('#quotes').replaceChildren(el('p', { class: 'note' }, 'No trials in this cohort gave a reason in this group.')); return; }
+    $('#quotes').replaceChildren(...a.slice(0, 6).map((t) => {
+      const nct = safeNct(t.nct);
+      return el('div', { class: 'q' }, el('blockquote', {}, `“${t.reason}”`),
+        el('div', { class: 'by' }, `${condLabel(t.cond)}, ${t.year}. Filed as: ${GROUPS[t.group]}. `, nct ? el('a', { href: `https://clinicaltrials.gov/study/${nct}`, target: '_blank', rel: 'noopener noreferrer' }, nct) : null));
+    }));
+  }
+  const host = $('#wordsControls');
+  const cohortBox = el('div', { role: 'group', 'aria-label': 'Cohort', style: 'display:contents' });
+  const reasonBox = el('div', { role: 'group', 'aria-label': 'Reason', style: 'display:contents' });
+  const press = (box, b) => { box.querySelectorAll('.chip').forEach((c) => c.setAttribute('aria-pressed', 'false')); b.setAttribute('aria-pressed', 'true'); };
+  for (const [c, label] of [[0, 'Rare cancers'], [1, 'Common cancers']]) {
+    const b = el('button', { class: 'chip', type: 'button', 'aria-pressed': String(c === wordsCohort) }, label);
+    b.addEventListener('click', () => { wordsCohort = c; press(cohortBox, b); render(); });
+    cohortBox.append(b);
+  }
+  const mk = (g, label) => {
+    const b = el('button', { class: 'chip', type: 'button', 'aria-pressed': String(g === wordsGroup) }, label);
+    b.addEventListener('click', () => { wordsGroup = g; press(reasonBox, b); render(); });
+    return b;
+  };
+  reasonBox.append(mk(null, 'Any reason'));
+  for (const g of BAND_ORDER.slice(0, 5)) reasonBox.append(mk(g, GROUPS[g]));
+  host.append(cohortBox, el('span', { class: 'sep', 'aria-hidden': 'true' }), reasonBox);
+  $('#shuffle').addEventListener('click', () => { seed++; render(); });
+  render();
+})();
+
+// ---- cancer by cancer -------------------------------------------------------------------------
+(() => {
+  const rows = res.byConditionGroup.filter((r) => r.cohort === 'rare' && r.stated > 0).sort((a, b) => a.science.p - b.science.p);
+  $('#ccFoot').textContent = `* Near the rarity threshold; dropped in one stress test. "Stopped early" is the share of the group\u2019s finished trials (completed or terminated) that were terminated. All common cancers together: ${P.stops ? pct(P.stops.common.p) : 'n/a'}.`;
+  const host = $('#cc');
+  host.append(el('div', { class: 'cc-row cc-head' }, el('span', {}, 'Cancer group'), el('span', { class: 'plotcell' }, `Share stopped because of what they found (dashed line: common cancers, ${pct(P.outcomes.SCIENCE.common.p)})`), el('span', { class: 'n' }, 'Gave a reason'), el('span', { class: 'n' }, 'Stopped early')));
+  const axisMax = Math.min(1, Math.ceil(Math.max(P.outcomes.SCIENCE.common.p, ...rows.map((r) => r.science.hi)) * 10) / 10);
+  const X = (v) => 4 + (392 * v) / axisMax;
+  for (const r of rows) {
+    const small = r.stated < 15, s = r.science;
+    const svg = sv('svg', { viewBox: '0 0 400 26', role: 'img', 'aria-label': `${r.label}: ${pct(s.p)} of ${r.stated}` });
+    svg.append(sv('line', { x1: X(0), x2: X(axisMax), y1: 13, y2: 13, stroke: '#e0e6ea', 'stroke-width': 1 }));
+    svg.append(sv('line', { x1: X(P.outcomes.SCIENCE.common.p), x2: X(P.outcomes.SCIENCE.common.p), y1: 1, y2: 25, stroke: '#5f6d7a', 'stroke-width': 1, 'stroke-dasharray': '3 3' }));
+    svg.append(sv('line', { x1: X(s.lo), x2: X(s.hi), y1: 13, y2: 13, stroke: small ? '#8b99a6' : '#17212b', 'stroke-width': 1.5 }));
+    svg.append(sv('circle', { cx: X(s.p), cy: 13, r: 5, fill: small ? '#f3f5f6' : '#17212b', stroke: '#17212b', 'stroke-width': 2 }));
+    host.append(el('div', { class: 'cc-row' }, el('span', {}, r.label + (r.borderline ? ' *' : '')), svg, el('span', { class: 'n' }, String(r.stated)), el('span', { class: 'n', title: `${r.stopped.k} of ${r.finished} finished trials` }, r.finished ? pct(r.stopped.p) : 'n/a')));
+  }
+})();
+
+// ---- method -----------------------------------------------------------------------------------
+(() => {
+  const m = $('#method');
+  const sect = (title, ...kids) => { m.append(el('h3', {}, title), ...kids.flat().filter((k) => k != null)); };
+  const link = (href, text) => el('a', { href, target: '_blank', rel: 'noopener noreferrer' }, text);
+  const commitUrl = CFG.repoUrl && CFG.preregCommit ? `${CFG.repoUrl}/commit/${CFG.preregCommit}` : null;
+  const fmt = (n) => Number(n || 0).toLocaleString('en-US');
+
+  sect('What was already known',
+    el('ul', { class: 'prior' },
+      el('li', {}, 'About one in five adult Phase 2 and 3 cancer trials registered between 2005 and 2011 failed to finish for reasons other than safety or efficacy. ', el('span', { class: 'src' }, 'Stensland et al., ', link('https://doi.org/10.1093/jnci/dju229', 'JNCI 2014'), '.')),
+      el('li', {}, 'Of terminated trials with results posted on ClinicalTrials.gov, 21% stopped on the trial’s own data and 68% for other reasons, led by slow enrollment. ', el('span', { class: 'src' }, 'Williams et al., ', link('https://doi.org/10.1371/journal.pone.0127242', 'PLOS ONE 2015'), '.')),
+      el('li', {}, 'Across 12,875 adult cancer trials registered from 2011 to 2015, poor accrual was the top reason for stopping, and how often trials stopped was not linked to how common the tumor type was. ', el('span', { class: 'src' }, 'Khunger et al., ', link('https://doi.org/10.1634/theoncologist.2018-0003', 'The Oncologist 2018'), '.')),
+      el('li', {}, 'Phase 2 trials and trials without industry funding were more likely to stop for poor accrual. ', el('span', { class: 'src' }, 'Zhang and DuBois, ', link('https://doi.org/10.1002/cam4.5385', 'Cancer Medicine 2023'), '.')),
+      el('li', {}, 'Stopping a trial to save money has been called a broken pact with the researchers and patients who took part. ', el('span', { class: 'src' }, 'Psaty and Rennie, ', link('https://doi.org/10.1001/jama.289.16.2128', 'JAMA 2003'), '.'))),
+    el('p', {}, 'Those studies look at cancer trials as a whole. This audit splits them by how rare the cancer is, and asks whether the reasons differ, not only the rate.'));
+
+  sect('What I predicted first',
+    el('p', {}, 'Rare cancer trials would be less likely than common cancer trials to stop because of their own results, more likely to stop for money, business decisions or too few patients, and more likely to stop at all. I wrote that down, with the rule for judging it, before pulling any data.'),
+    commitUrl ? el('p', {}, 'The pre-registration is committed in the public repository: ', link(commitUrl, `commit ${CFG.preregCommit.slice(0, 7)}`), CFG.osfUrl ? [' and mirrored at ', link(CFG.osfUrl, 'the Open Science Framework'), '.'] : '.')
+      : el('p', {}, el('span', { class: 'dev' }, 'Dev build: pre-registration commit not set in config/site.json')));
+
+  // why each group counts as rare
+  const conds = DATA.conditions.filter((c) => c.incidence);
+  if (conds.length) {
+    const srcLinks = (keys) => keys.map((k, i) => [i ? '; ' : '', DATA.sources?.[k] ? link(DATA.sources[k].url, DATA.sources[k].label) : k]);
+    sect('Why each group counts as rare',
+      el('p', {}, 'A cancer counts as rare here if fewer than 6 people in 100,000 get it each year. That is the European RARECARE threshold, also used by the American Cancer Society. The U.S. National Cancer Institute uses a looser line of 15 per 100,000, and every group below meets that one too. Rates are per 100,000 people per year. “Crude” means the American Cancer Society’s 2026 case estimate divided by the Census Bureau’s 2025 population of 341.8 million.'),
+      el('details', { class: 'more' }, el('summary', {}, `Show the figure and sources for all ${conds.length} groups`),
+      el('div', { class: 'tablewrap' }, el('table', { class: 't' },
+        el('thead', {}, el('tr', {}, el('th', {}, 'Group'), el('th', { style: 'text-align:left' }, 'Incidence and source'))),
+        el('tbody', {}, conds.map((c) => el('tr', {},
+          el('td', {}, c.label, c.cohort === 'common' ? el('div', { class: 'src' }, 'Common (control)') : c.borderline ? el('div', { class: 'src' }, 'Near the line') : null),
+          el('td', { class: 'l' }, c.incidence.text, c.incidence.why ? el('div', {}, el('em', {}, 'Near the line: '), c.incidence.why) : null, el('div', { class: 'src' }, srcLinks(c.incidence.sources))))))))),
+      el('p', { class: 'note' }, 'Groups marked near the line are dropped in one of the stress tests below.'));
+  }
+
+  sect('Did the coding hold up?',
+    el('p', {}, 'The registry stores the reason as free text, so a rule-based coder sorts it into categories. A coder can be wrong in a direction that flatters a hypothesis, so I checked it by hand.'),
+    AUDIT ? el('p', {}, `I labeled ${AUDIT.n} randomly chosen reasons myself without seeing the coder's answer. On the five reason groups we agreed on ${pct(AUDIT.group.agreement)} of them (Cohen’s kappa ${AUDIT.group.kappa.toFixed(2)}). On the finer eight categories, ${pct(AUDIT.category.agreement)} (kappa ${AUDIT.category.kappa.toFixed(2)}).`)
+      : el('p', {}, el('span', { class: 'dev' }, 'Dev build: hand audit not done yet. Run the audit before deploying so this paragraph can report it.')));
+
+  const f = DATA.flow;
+  const ks = f.keptByStatus || {};
+  const flowRows = [
+    ['Records retrieved from the registry', f.retrieved], ['Duplicates removed (one trial can match several searches)', -f.duplicates],
+    ['Not completed, terminated or withdrawn', -f.excluded.status], ['Not an interventional study', -f.excluded.not_interventional],
+    ['Not Phase 2 or Phase 3', -f.excluded.phase], ['No start date', -f.excluded.no_start_date],
+    ['Started before 2000 or after 2023', -f.excluded.start_year], ['Cancer is in neither cohort', -f.excluded.no_cohort],
+  ];
+  sect('Where the numbers come from',
+    el('p', {}, `Trial records were pulled from ClinicalTrials.gov${DATA.meta.fetchedAt ? ` on ${DATA.meta.fetchedAt.slice(0, 10)}` : ''}. Each step below removes trials, and every removal is counted.`),
+    el('div', { class: 'tablewrap' }, el('table', { class: 't' }, el('tbody', {},
+      flowRows.map(([l, n]) => el('tr', {}, el('td', {}, l), el('td', {}, (n < 0 ? '−' : '') + fmt(Math.abs(n))))),
+      el('tr', { class: 'sum' }, el('td', {}, 'Trials kept (rare / common)'), el('td', {}, `${fmt(f.keptByCohort.rare)} / ${fmt(f.keptByCohort.common)}`)),
+      el('tr', {}, el('td', {}, 'Of those: completed / terminated / withdrawn'), el('td', {}, `${fmt(ks.COMPLETED)} / ${fmt(ks.TERMINATED)} / ${fmt(ks.WITHDRAWN)}`)),
+      el('tr', {}, el('td', {}, 'Terminated with a stated reason (rare / common)'), el('td', {}, `${fmt(P.cohorts.rare.stated)} / ${fmt(P.cohorts.common.stated)}`))))),
+    el('p', {}, missingSentence(res)));
+
+  const sens = res.sensitivity;
+  const pp = (x) => (x == null || Number.isNaN(x) ? 'n/a' : `${x >= 0 ? '+' : '\u2212'}${Math.abs(x * 100).toFixed(1)}`);
+  const cell = (o) => { if (!o) return el('td', {}, '\u2013'); const sig = o.p != null && o.p < 0.05; return el('td', { class: sig ? 'sig' : '' }, pp(o.rare - o.common)); };
+  sect('Stress tests',
+    el('p', {}, 'The same comparisons under different choices. Each cell is rare minus common, in percentage points. Bold means the difference would pass p < 0.05 on its own. A dash means the test does not apply, because the choice is about reasons and the last column is not. The main result is the first row.'),
+    el('div', { class: 'tablewrap' }, el('table', { class: 't' },
+      el('thead', {}, el('tr', {}, el('th', {}, 'Analysis'), el('th', {}, 'Rare n'), el('th', {}, 'Common n'), ...['SCIENCE', 'MONEY', 'ACCRUAL'].map((g) => el('th', {}, GROUPS[g])), el('th', {}, 'Stopped at all'))),
+      el('tbody', {},
+        el('tr', { class: 'sum' }, el('td', {}, 'Main analysis'), el('td', {}, fmt(P.cohorts.rare.stated)), el('td', {}, fmt(P.cohorts.common.stated)),
+          ...['SCIENCE', 'MONEY', 'ACCRUAL'].map((k) => el('td', {}, pp(P.outcomes[k].rare.p - P.outcomes[k].common.p))),
+          el('td', {}, P.stops ? pp(P.stops.rare.p - P.stops.common.p) : '–')),
+        sens.map((x) => el('tr', {}, el('td', {}, x.name), el('td', {}, fmt(x.nRare)), el('td', {}, fmt(x.nCommon)), cell(x.outcomes.SCIENCE), cell(x.outcomes.MONEY), cell(x.outcomes.ACCRUAL), cell(x.stops)))))),
+    el('p', { class: 'note' }, 'Rare n and common n count terminated trials with a stated reason. The stop-rate column uses all finished trials in the same slice.'));
+
+  sect('What this cannot tell you',
+    el('ul', {},
+      el('li', {}, 'A stated reason is whatever the sponsor chose to write. “Sponsor decision” can sit on top of disappointing data, so the true share stopped for scientific reasons is probably higher in both groups than measured here.'),
+      el('li', {}, 'The registry only holds registered trials, and registration quality varies by country and era. Trials whose status was never updated (“unknown”) are left out of every count.'),
+      el('li', {}, 'Trials that stop early also finish sooner, so recent start years over-represent stopped trials. The stress test limited to trials started by 2015 checks this.'),
+      el('li', {}, 'Rare and common cancer trials differ in more than the cancer. I compared within sponsor type and phase. Drug type, trial size and era are not accounted for, so this shows an association, not a cause.'),
+      el('li', {}, '“Too few patients” is partly a result of small patient populations. Whether that counts as an economic cause is a judgment call.'),
+      el('li', {}, 'The rare cohort is a list built from published incidence figures. A different defensible list could shift the numbers, which is what the stress tests probe.')));
+
+  sect('Check it yourself',
+    el('p', {}, 'The analysis is a few small scripts with no dependencies. The exact records behind this page are saved in the repository. Pulling from the registry again later will pick up newer records, so a fresh run will drift slightly from these numbers.'),
+    el('pre', {}, el('code', {}, 'git clone ' + (CFG.repoUrl || '<repository url>') + '\ncd stopped\nnpm test\nnpm run analyze')),
+    CFG.repoUrl ? el('p', {}, link(CFG.repoUrl, 'Open the repository'), '.') : null);
+})();
+
+// ---- footer ------------------------------------------------------------------------------------
+$('#footA').textContent = `${CFG.title} is a project of the ${CFG.org}, by ${CFG.author}. Trial records are from ClinicalTrials.gov, run by the U.S. National Library of Medicine. Sponsors’ reasons are shown as written, cut at 280 characters. The reason categories were assigned by this project, not by the registry.`;
+$('#footB').textContent = `Registry data processed by ClinicalTrials.gov: ${DATA.meta.registryDataTimestamp || 'not recorded'}. Pulled: ${DATA.meta.fetchedAt ? DATA.meta.fetchedAt.slice(0, 10) : 'not recorded'}. Built: ${DATA.meta.analyzedAt ? DATA.meta.analyzedAt.slice(0, 10) : 'not recorded'}.`;
+
+// ---- start -------------------------------------------------------------------------------------
+function relayout() { panels.forEach((p) => p.redraw()); }
+function start() {
+  relayout();
+  // Open on a random rare cancer trial with a readable reason, of any kind.
+  const first = rareItems.filter((t) => t.group !== null && t.reason.length > 24 && t.reason.length < 160);
+  const pick = first.length ? first[Math.floor(Math.random() * first.length)] : null;
+  if (pick) select(pick);
+  const io = new IntersectionObserver((es) => { if (es.some((e) => e.isIntersecting)) { panels.forEach((p) => p.reveal()); io.disconnect(); } }, { threshold: 0.15 });
+  io.observe($('#panels'));
+}
+let rt; new ResizeObserver(() => { clearTimeout(rt); rt = setTimeout(relayout, 60); }).observe($('#panels'));
+(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(start);
+})();
+</script>
+</body>
+</html>

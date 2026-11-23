@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Blind audit of the reason coder</title>
+<style>
+/*__FONTS__*/
+:root { --paper:#f3f5f6; --ink:#17212b; --ink-2:#44525f; --ink-3:#5f6d7a; --rule:#cbd3d9; --serif:'Literata',Georgia,serif; --sans:'Public Sans',system-ui,sans-serif; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.0625rem/1.65 var(--serif); }
+.wrap { max-width: 44rem; margin: 0 auto; padding: 1.5rem 1.25rem 4rem; }
+h1 { font: 600 1.5rem/1.2 var(--serif); margin: 0 0 0.5rem; }
+.sub { font: 400 0.9375rem/1.55 var(--sans); color: var(--ink-2); margin: 0 0 1.5rem; }
+.bar { height: 4px; background: var(--rule); margin-bottom: 0.4rem; }
+.bar i { display: block; height: 100%; background: var(--ink); width: 0; }
+.count { font: 400 0.8125rem var(--sans); color: var(--ink-3); margin-bottom: 1.4rem; }
+blockquote { margin: 0 0 1.6rem; padding: 1.2rem 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); font: italic 400 1.35rem/1.5 var(--serif); min-height: 6rem; }
+.opts { display: grid; gap: 0.5rem; }
+.opt { appearance: none; text-align: left; background: transparent; border: 1px solid var(--rule); color: var(--ink); font: 500 0.9375rem/1.35 var(--sans); padding: 0.75rem 0.9rem; cursor: pointer; border-radius: 2px; display: flex; gap: 0.75rem; }
+.opt kbd { font: 600 0.8125rem/1 var(--sans); border: 1px solid var(--rule); width: 1.5rem; height: 1.5rem; display: inline-flex; align-items: center; justify-content: center; align-self: center; flex: none; }
+.opt small { display: block; font-weight: 400; color: var(--ink-3); margin-top: 0.15rem; }
+.opt:hover { border-color: var(--ink-3); }
+.opt[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.opt[aria-pressed="true"] small { color: #b6c2cc; }
+.opt[aria-pressed="true"] kbd { border-color: #b6c2cc; }
+.nav { display: flex; gap: 0.6rem; margin-top: 1.4rem; font-family: var(--sans); }
+button.b { appearance: none; background: transparent; border: 1px solid var(--ink); color: var(--ink); font: 500 0.875rem var(--sans); padding: 0.65rem 1rem; min-height: 2.5rem; cursor: pointer; border-radius: 2px; }
+button.b:hover:not(:disabled) { background: var(--ink); color: var(--paper); }
+button.b:disabled { opacity: .35; cursor: default; }
+.done { margin-top: 1.6rem; font: 400 0.9375rem/1.6 var(--sans); }
+.done[hidden] { display: none; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Blind audit of the reason coder</h1>
+  <p class="sub">You see only the sponsor's words, with no cancer type, no cohort, and no label from the coder. Pick the category that best fits the main reason. Keys 1 to 8 choose, the left and right arrows move. Progress saves in this browser as you go.</p>
+  <div class="bar"><i id="bar"></i></div>
+  <div class="count" id="count"></div>
+  <blockquote id="text"></blockquote>
+  <div class="opts" id="opts"></div>
+  <div class="nav"><button class="b" id="prev" type="button">Back</button><button class="b" id="next" type="button">Next</button></div>
+  <div class="done" id="done" hidden>
+    <p>All labelled. Save your labels, put the file at <code>audit/labels.json</code> in the project, then run <code>npm run audit:score</code>.</p>
+    <p><label>Your name for the record <input id="who" type="text" value="" style="font:inherit;padding:.3rem .4rem"></label></p>
+    <button class="b" id="save" type="button">Download labels.json</button>
+  </div>
+</div>
+<script>
+(() => {
+'use strict';
+const SAMPLE = __SAMPLE__;
+const CATS = [
+  ['SCIENCE', 'What the trial found', 'Lack of efficacy, futility, safety or toxicity, a monitoring committee, interim results, early benefit'],
+  ['FUNDING', 'Funding', 'Money, budget, grant ended, resources'],
+  ['BUSINESS', 'Business or sponsor decision', 'Company priorities, portfolio, acquisition, program discontinued, no reason beyond "sponsor decision"'],
+  ['ACCRUAL', 'Too few patients', 'Slow or low accrual, recruitment problems, not enough eligible patients'],
+  ['LANDSCAPE', 'Standard of care moved on', 'Standard of care changed, competing drug approved, new evidence elsewhere'],
+  ['PANDEMIC', 'COVID-19', 'Pandemic named as the reason'],
+  ['OPERATIONAL', 'Logistics', 'Investigator left, site closed, drug supply, regulatory or ethics issue, protocol change'],
+  ['OTHER', 'Other', 'Anything that fits none of the above'],
+];
+const KEY = 'stopped-audit-labels-v1';
+let labels = {};
+try { labels = JSON.parse(localStorage.getItem(KEY) || '{}'); } catch { labels = {}; }
+let i = Math.max(0, SAMPLE.findIndex((s) => !(s.id in labels)));
+if (i < 0) i = 0;
+const $ = (s) => document.querySelector(s);
+function save() { try { localStorage.setItem(KEY, JSON.stringify(labels)); } catch { /* storage may be unavailable */ } }
+function render() {
+  const s = SAMPLE[i];
+  $('#text').textContent = `“${s.text}”`;
+  const done = Object.keys(labels).length;
+  $('#count').textContent = `Reason ${i + 1} of ${SAMPLE.length}. Labelled: ${done}.`;
+  $('#bar').style.width = `${(done / SAMPLE.length) * 100}%`;
+  const opts = $('#opts'); opts.replaceChildren();
+  CATS.forEach(([k, name, hint], n) => {
+    const b = document.createElement('button');
+    b.type = 'button'; b.className = 'opt'; b.setAttribute('aria-pressed', String(labels[s.id] === k));
+    const kb = document.createElement('kbd'); kb.textContent = String(n + 1);
+    const t = document.createElement('span'); t.textContent = name;
+    const sm = document.createElement('small'); sm.textContent = hint; t.append(sm);
+    b.append(kb, t);
+    b.addEventListener('click', () => choose(k));
+    opts.append(b);
+  });
+  $('#prev').disabled = i === 0;
+  $('#next').disabled = i === SAMPLE.length - 1;
+  $('#done').hidden = done < SAMPLE.length;
+}
+function choose(k) { labels[SAMPLE[i].id] = k; save(); if (i < SAMPLE.length - 1) i++; render(); }
+$('#prev').addEventListener('click', () => { if (i > 0) { i--; render(); } });
+$('#next').addEventListener('click', () => { if (i < SAMPLE.length - 1) { i++; render(); } });
+document.addEventListener('keydown', (e) => {
+  if (e.target && e.target.tagName === 'INPUT') return;
+  if (e.key >= '1' && e.key <= '8') choose(CATS[Number(e.key) - 1][0]);
+  else if (e.key === 'ArrowLeft') $('#prev').click();
+  else if (e.key === 'ArrowRight') $('#next').click();
+});
+$('#save').addEventListener('click', () => {
+  const blob = new Blob([JSON.stringify({ auditor: $('#who').value.trim() || null, completedAt: new Date().toISOString(), labels }, null, 1)], { type: 'application/json' });
+  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'labels.json'; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+render();
+})();
+</script>
+</body>
+</html>
